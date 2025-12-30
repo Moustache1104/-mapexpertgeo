@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expertgeo - Services Géomatiques & Boutique</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2a5c82;
+            --secondary-color: #3ab795;
+            --accent-color: #f4a261;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --dark-bg: #1a3c5e;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-main);
+            line-height: 1.6;
+            color: var(--text-color);
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+        
+        /* Background dynamique */
+        #dynamic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #1a3c5e 0%, #2a5c82 50%, #3ab795 100%);
+            overflow: hidden;
+        }
+        
+        .bg-particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Header et Navigation */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+        }
+        
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .logo-text span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        nav a:hover {
+            color: var(--secondary-color);
+            background-color: rgba(58, 183, 149, 0.1);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+        
+        /* Panier */
+        .cart-icon {
+            position: relative;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            cursor: pointer;
+            margin-left: 20px;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--accent-color);
+            color: white;
+            font-size: 0.8rem;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Section Hero */
+        .hero {
+            padding: 100px 0;
+            color: white;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #e6892e;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background-color: var(--primary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #1e4a6e;
+        }
+        
+        /* Sections générales */
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.8;
+        }
+        
+        /* Section Services */
+        .services {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 1200px;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        /* Section Galerie */
+        .gallery {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 1200px;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 250px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Section Boutique */
+        .shop {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 1200px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+        
+        /* Section Inscription/Connexion */
+        .auth-section {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .auth-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .auth-tabs {
+            display: flex;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .auth-tab {
+            padding: 15px 30px;
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: #777;
+            transition: all 0.3s;
+        }
+        
+        .auth-tab.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+        }
+        
+        .auth-form {
+            display: none;
+        }
+        
+        .auth-form.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: var(--font-main);
+            font-size: 1rem;
+        }
+        
+        /* Section Contact */
+        .contact {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background-color: var(--light-bg);
+            border-radius: 10px;
+            min-width: 250px;
+        }
+        
+        .contact-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+        
+        .contact-text h4 {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        /* Section Paramètres */
+        .settings-panel {
+            position: fixed;
+            top: 100px;
+            right: -400px;
+            width: 400px;
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            border-radius: 15px 0 0 15px;
+            transition: right 0.5s ease;
+            z-index: 1000;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .settings-panel.open {
+            right: 0;
+        }
+        
+        .settings-toggle {
+            position: absolute;
+            left: -50px;
+            top: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 10px 0 0 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: -3px 0 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .settings-title {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--light-bg);
+            padding-bottom: 10px;
+        }
+        
+        .setting-group {
+            margin-bottom: 20px;
+        }
+        
+        .setting-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        .setting-group input, 
+        .setting-group select, 
+        .setting-group textarea {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: var(--font-main);
+            font-size: 1rem;
+        }
+        
+        .setting-group textarea {
+            height: 80px;
+            resize: vertical;
+        }
+        
+        .color-picker {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: transform 0.2s;
+        }
+        
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+        
+        .color-option.active {
+            border-color: var(--text-color);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: rgba(26, 60, 94, 0.95);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 80px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        /* Modal Panier */
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            display: flex;
+            justify-content: flex-end;
+            display: none;
+        }
+        
+        .cart-modal.active {
+            display: flex;
+        }
+        
+        .cart-content {
+            width: 400px;
+            background-color: white;
+            padding: 30px;
+            overflow-y: auto;
+            transform: translateX(100%);
+            transition: transform 0.3s;
+        }
+        
+        .cart-modal.active .cart-content {
+            transform: translateX(0);
+        }
+        
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #777;
+        }
+        
+        .cart-items {
+            margin-bottom: 30px;
+        }
+        
+        .cart-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cart-item-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 15px;
+        }
+        
+        .cart-item-info {
+            flex: 1;
+        }
+        
+        .cart-item-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .cart-item-price {
+            color: var(--secondary-color);
+            font-weight: 700;
+        }
+        
+        .cart-total {
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .services-grid, .gallery-grid, .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+            
+            .settings-panel {
+                width: 350px;
+                right: -350px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+            
+            .hero {
+                padding: 70px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-menu {
+                display: none;
+                width: 100%;
+                text-align: center;
+                margin-top: 20px;
+            }
+            
+            .nav-menu.active {
+                display: block;
+            }
+            
+            .nav-menu ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .auth-section, .contact {
+                padding: 30px 20px;
+            }
+            
+            .settings-panel {
+                width: 100%;
+                right: -100%;
+                border-radius: 0;
+                top: 0;
+                height: 100vh;
+                max-height: 100vh;
+            }
+            
+            .settings-toggle {
+                left: -45px;
+                top: 10px;
+            }
+            
+            .cart-content {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .services, .gallery, .shop {
+                padding: 25px 15px;
+            }
+            
+            .contact-item {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background dynamique -->
+    <div id="dynamic-bg"></div>
+    
+    <!-- Panneau de paramètres -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-toggle" id="settingsToggle">
+            <i class="fas fa-cog"></i>
+        </div>
+        <h2 class="settings-title">Paramètres du Site</h2>
+        
+        <div class="setting-group">
+            <label for="bgColor">Couleur du fond :</label>
+            <div class="color-picker">
+                <div class="color-option active" style="background: linear-gradient(135deg, #1a3c5e 0%, #2a5c82 50%, #3ab795 100%);" data-bg="1"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #2c3e50 0%, #4a6491 50%, #7bc6cc 100%);" data-bg="2"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);" data-bg="3"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #3a1c71 0%, #d76d77 50%, #ffaf7b 100%);" data-bg="4"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);" data-bg="5"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #fc466b 0%, #3f5efb 100%);" data-bg="6"></div>
+            </div>
+        </div>
+        
+        <div class="setting-group">
+            <label for="particleCount">Nombre de particules :</label>
+            <input type="range" id="particleCount" min="10" max="100" value="50">
+        </div>
+        
+        <div class="setting-group">
+            <label for="animationSpeed">Vitesse d'animation :</label>
+            <select id="animationSpeed">
+                <option value="slow">Lente</option>
+                <option value="normal" selected>Normale</option>
+                <option value="fast">Rapide</option>
+            </select>
+        </div>
+        
+        <div class="setting-group">
+            <label for="contactPhone">Téléphone :</label>
+            <input type="text" id="contactPhone" value="0719739774">
+        </div>
+        
+        <div class="setting-group">
+            <label for="contactEmail">Email :</label>
+            <input type="email" id="contactEmail" value="z.mustapha0411@gmail.com">
+        </div>
+        
+        <div class="setting-group">
+            <label for="contactAddress">Adresse :</label>
+            <textarea id="contactAddress">Temara, Rabat, Maroc</textarea>
+        </div>
+        
+        <div class="setting-group">
+            <label for="companySlogan">Slogan de l'entreprise :</label>
+            <input type="text" id="companySlogan" value="Expert en Géomatique et Cartographie">
+        </div>
+        
+        <div class="setting-group">
+            <label for="siteUrl">URL du site :</label>
+            <input type="text" id="siteUrl" value="mapexpertgeo" readonly style="background-color: #f5f5f5;">
+        </div>
+        
+        <button class="btn" id="saveSettings">Enregistrer les modifications</button>
+        <button class="btn" id="resetSettings" style="margin-top: 10px; background-color: #6c757d;">Réinitialiser</button>
+    </div>
+    
+    <!-- Modal Panier -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3>Votre Panier</h3>
+                <button class="close-cart" id="closeCart">&times;</button>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <!-- Les articles du panier seront ajoutés ici -->
+            </div>
+            <div class="cart-total">
+                Total: <span id="cartTotal">0</span> MAD
+            </div>
+            <button class="btn" style="width: 100%;" id="checkoutBtn">Passer la commande</button>
+        </div>
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-map-marked-alt logo-icon"></i>
+                <div class="logo-text">Expert<span>geo</span></div>
+            </div>
+            
+            <nav class="nav-menu" id="navMenu">
+                <ul>
+                    <li><a href="#home">Accueil</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#gallery">Galerie</a></li>
+                    <li><a href="#shop">Boutique</a></li>
+                    <li><a href="#auth">Inscription</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <div style="display: flex; align-items: center;">
+                <div class="cart-icon" id="cartIcon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Section Hero -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1 id="mainTitle">Expertgeo - Expertise Géomatique Avancée</h1>
+            <p id="mainSlogan">Solutions innovantes en cartographie, SIG et analyse géospatiale pour vos projets au Maroc et au-delà</p>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <a href="#services" class="btn">Nos Services</a>
+                <a href="#shop" class="btn btn-secondary">Visiter la Boutique</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Section Services -->
+    <section id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nos Services</h2>
+                <p>Des solutions géomatiques complètes adaptées à vos besoins spécifiques</p>
+            </div>
+            
+            <div class="services">
+                <div class="services-grid">
+                    <div class="service-card">
+                        <i class="fas fa-map service-icon"></i>
+                        <h3>Cartographie Numérique</h3>
+                        <p>Création de cartes topographiques, thématiques et interactives pour une visualisation optimale de vos données géospatiales.</p>
+                        <button class="btn" style="margin-top: 15px; padding: 8px 20px; font-size: 0.9rem;">Demander un devis</button>
+                    </div>
+                    
+                    <div class="service-card">
+                        <i class="fas fa-satellite service-icon"></i>
+                        <h3>Télédétection & SIG</h3>
+                        <p>Analyse d'images satellites et développement de systèmes d'information géographique sur mesure pour votre entreprise.</p>
+                        <button class="btn" style="margin-top: 15px; padding: 8px 20px; font-size: 0.9rem;">Demander un devis</button>
+                    </div>
+                    
+                    <div class="service-card">
+                        <i class="fas fa-ruler-combined service-icon"></i>
+                        <h3>Topographie & Cadastre</h3>
+                        <p>Levés topographiques précis, délimitation de propriétés et assistance technique pour vos projets d'aménagement.</p>
+                        <button class="btn" style="margin-top: 15px; padding: 8px 20px; font-size: 0.9rem;">Demander un devis</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Section Galerie -->
+    <section id="gallery">
+        <div class="container">
+            <div class="section-title">
+                <h2>Galerie Photo</h2>
+                <p>Découvrez nos réalisations en géomatique et cartographie</p>
+            </div>
+            
+            <div class="gallery">
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1542744094-3a31f272c490?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             alt="Cartographie numérique" 
+                             class="gallery-img">
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1564053489984-317bbd824340?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             alt="Télédétection" 
+                             class="gallery-img">
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             alt="Topographie" 
+                             class="gallery-img">
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1542744094-fb5c5b18d4ac?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             alt="SIG" 
+                             class="gallery-img">
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1564053489984-317bbd824340?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             alt="Levés techniques" 
+                             class="gallery-img">
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1543286386-713bdd548da4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             alt="Cartes thématiques" 
+                             class="gallery-img">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Section Boutique -->
+    <section id="shop">
+        <div class="container">
+            <div class="section-title">
+                <h2>Boutique Expertgeo</h2>
+                <p>Matériel géomatique, logiciels et formations</p>
+            </div>
+            
+            <div class="shop">
+                <div class="products-grid">
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1564053489984-317bbd824340?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             alt="Station totale" 
+                             class="product-img">
+                        <div class="product-info">
+                            <h3 class="product-title">Station Totale Robotisée</h3>
+                            <p class="product-price">25,000 MAD</p>
+                            <button class="btn add-to-cart" data-id="1" data-name="Station Totale Robotisée" data-price="25000" style="width: 100%; padding: 10px;">Ajouter au panier</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1542744094-fb5c5b18d4ac?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             alt="GPS géodésique" 
+                             class="product-img">
+                        <div class="product-info">
+                            <h3 class="product-title">GPS Géodésique Haute Précision</h3>
+                            <p class="product-price">18,500 MAD</p>
+                            <button class="btn add-to-cart" data-id="2" data-name="GPS Géodésique" data-price="18500" style="width: 100%; padding: 10px;">Ajouter au panier</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             alt="Logiciel SIG" 
+                             class="product-img">
+                        <div class="product-info">
+                            <h3 class="product-title">Licence Logiciel SIG Professionnel</h3>
+                            <p class="product-price">8,900 MAD</p>
+                            <button class="btn add-to-cart" data-id="3" data-name="Licence SIG" data-price="8900" style="width: 100%; padding: 10px;">Ajouter au panier</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1542744094-3a31f272c490?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             alt="Formation géomatique" 
+                             class="product-img">
+                        <div class="product-info">
+                            <h3 class="product-title">Formation Géomatique Complète</h3>
+                            <p class="product-price">3,500 MAD</p>
+                            <button class="btn add-to-cart" data-id="4" data-name="Formation Géomatique" data-price="3500" style="width: 100%; padding: 10px;">Ajouter au panier</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Section Inscription/Connexion -->
+    <section id="auth">
+        <div class="container">
+            <div class="section-title">
+                <h2>Espace Client</h2>
+                <p>Inscrivez-vous pour bénéficier de nos services en ligne</p>
+            </div>
+            
+            <div class="auth-section">
+                <div class="auth-container">
+                    <div class="auth-tabs">
+                        <button class="auth-tab active" data-tab="login">Connexion</
